@@ -1,0 +1,83 @@
+extends layout
+
+block extendedHeader
+    link(rel='stylesheet', href='/stylesheets/colors.css')
+
+block content
+  .main.container
+    .row
+      .col-md-10.col-md-offset-1
+        h1.
+            colors
+
+        iframe(name='responseFrame')
+
+        // brightness input
+
+        form(method='post', action='/color/brightness')
+          div.form-group
+            label(for='brightness') brightness (1-8):
+            input#brightness.form-control(type='text', placeholder='1' name='brightness')
+          button.btn.btn-primary(type='submit') set brightness
+
+        // speed input
+
+        form(method='post', action='/color/speed')
+          div.form-group
+            label(for='speed') cycle speed (ms):
+            input#speed.form-control(type='text', placeholder='1000' name='ms')
+          button.btn.btn-primary(type='submit') set speed
+
+
+        // cycle patterns
+        form(method='post', action='/color/cycle', target="responseFrame")
+            input(type="hidden",name="pattern", value="all")
+            button#cycle.btn(type="submit") all color cycle
+
+        form(method='post', action='/color/cycle', target="responseFrame")
+            input(type="hidden",name="pattern", value="rainbow")
+            button#cycle.btn(type="submit") rainbow cycle
+
+        form(method='post', action='/color/cycle', target="responseFrame")
+            input(type="hidden",name="pattern", value="halloween")
+            button#cycle.btn(type="submit") halloween cycle
+
+        form(method='post', action='/color/cycle', target="responseFrame")
+            input(type="hidden",name="pattern", value="off")
+            button#cycle.btn(type="submit") turn cycle off
+
+        // commands buttons
+
+        form(method='post', action='/color/ircommand', target="responseFrame")
+            input(type="hidden",name="command", value="power")
+            button#power.btn(type="submit", style="background-color: black; color: white") toggle power 
+
+        form(method='post', action='/color/ircommand', target="responseFrame")
+            input(type="hidden",name="command", value="brighter")
+            button#brighter.btn.pushbutton(type="submit", style="background-color: white") make brighter
+
+        form(method='post', action='/color/ircommand', target="responseFrame")
+            input(type="hidden",name="command", value="dimmer")
+            button#dimmer.btn.pushbutton(type="submit", style="background-color: gray") make dimmer
+
+        form(method='post', action='/color/ircommand', target="responseFrame")
+            input(type="hidden",name="command", value="bright")
+            button#bright.btn.pushbutton(type="submit", style="background-color: yellow") full brightness
+
+        form(method='post', action='/color/ircommand', target="responseFrame")
+            input(type="hidden",name="command", value="dim")
+            button#dim.btn.pushbutton(type="submit", style="background-color: black") lowest brightness
+        
+
+        // preset colors
+
+        each item, i in NamedColors
+            form(action="/color/hex", method="post", target="responseFrame")
+                input(type="hidden",name="hexcolor",value="#{item.hex}")
+                button#presetColor.btn.pushbutton(type="submit", style="background-color: \##{item.hex};") set #{item.name}: #{item.hex}
+
+        br
+        a(href="/") HOME
+
+
+

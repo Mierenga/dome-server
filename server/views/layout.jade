@@ -1,0 +1,15 @@
+doctype html
+html
+  head
+    title= title
+    link(rel='stylesheet', href='/stylesheets/style.css')
+    link(href='//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css', rel='stylesheet')
+    link(href='layout.js')
+    block extendedHeader
+
+  body
+
+    div(class='menu')
+      a(href='color')
+        div(class='menuitem', id="lights") lights
+    block content
